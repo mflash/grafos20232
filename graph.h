@@ -2,6 +2,9 @@
 #include <map>
 #include <string>
 
+#ifndef GRAPH_H
+#define GRAPH_H
+
 class Graph {
 
 public:
@@ -19,3 +22,6 @@ private:
 	std::map<std::string, std::vector<std::string> > graph;
 	void addToList(std::string v, std::string w);
 };
+
+#endif
+
