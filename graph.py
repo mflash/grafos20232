@@ -5,8 +5,8 @@ class Graph:
 			self.__readFromFile(args[0])
 
 	def addEdge(self, v, w):
-		self.__addToList(v,w)
-		self.__addToList(w,v)
+		self.addToList(v,w)
+		self.addToList(w,v)
 
 	def getAdj(self, v):
 		return self.graph[v]
@@ -29,7 +29,7 @@ class Graph:
 		sb += "}" + NEWLINE
 		return sb
 
-	def __addToList(self, v, w):
+	def addToList(self, v, w):
 		list = self.graph[v] if v in self.graph else []
 		list.append(w)
 		self.graph[v] = list
