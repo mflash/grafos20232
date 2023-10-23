@@ -5,7 +5,8 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-class Graph {
+class Graph
+{
 
 public:
 	Graph();
@@ -18,10 +19,11 @@ public:
 
 	std::string toDot();
 
-private:
-	std::map<std::string, std::vector<std::string> > graph;
+protected:
 	void addToList(std::string v, std::string w);
+
+private:
+	std::map<std::string, std::vector<std::string>> graph;
 };
 
 #endif
-
