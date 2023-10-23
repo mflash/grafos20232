@@ -25,7 +25,12 @@ appucycle = appucycle
 appucycle_src = appundirectedcycle.cpp undirectedcycle.cpp graph.cpp
 appucycle_obj = $(appucycle_src:.cpp=.o)
 
-all: appgraph appdigraph appdfs appbfs appucycle
+# Ciclos dirigidos
+appdcycle = appdcycle
+appdcycle_src = appdirectedcycle.cpp directedcycle.cpp digraph.cpp graph.cpp
+appdcycle_obj = $(appdcycle_src:.cpp=.o)
+
+all: appgraph appdigraph appdfs appbfs appucycle appdcycle
 
 $(appgraph): $(appgraph_obj)
 	g++ $(CPPFLAGS) $(appgraph_obj) -o $@
@@ -42,5 +47,8 @@ $(appbfs): $(appbfs_obj)
 $(appucycle): $(appucycle_obj)
 	g++ $(CPPFLAGS) $(appucycle_obj) -o $@
 
+$(appdcycle): $(appdcycle_obj)
+	g++ $(CPPFLAGS) $(appdcycle_obj) -o $@
+
 clean:
-	-@ rm -f $(appgraph_obj) $(appgraph) $(appdgraph_obj) $(appdgraph) $(appdfs_obj) $(appbfs_obj) $(appdfs) $(appbfs) $(appucycle) $(appucycle_obj)
+	-@ rm -f $(appgraph_obj) $(appgraph) $(appdgraph_obj) $(appdgraph) $(appdfs_obj) $(appbfs_obj) $(appdfs) $(appbfs) $(appucycle) $(appucycle_obj) $(appdcycle) $(appdcycle_obj)
