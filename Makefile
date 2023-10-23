@@ -10,7 +10,12 @@ appdfs = appdfs
 appdfs_src = appdfs.cpp graph.cpp depthfirstsearch.cpp
 appdfs_obj = $(appdfs_src:.cpp=.o)
 
-all: appgraph appdfs
+# BFS
+appbfs = appbfs
+appbfs_src = appbfs.cpp graph.cpp breadthfirstsearch.cpp
+appbfs_obj = $(appbfs_src:.cpp=.o)
+
+all: appgraph appdfs appbfs
 
 $(appgraph): $(appgraph_obj)
 	g++ $(CPPFLAGS) $(appgraph_obj) -o $@
@@ -18,6 +23,9 @@ $(appgraph): $(appgraph_obj)
 $(appdfs): $(appdfs_obj)
 	g++ $(CPPFLAGS) $(appdfs_obj) -o $@
 
+$(appbfs): $(appbfs_obj)
+	g++ $(CPPFLAGS) $(appbfs_obj) -o $@
+
 clean:
-	-@ rm -f $(appgraph_obj) $(appdfs_obj) $(appgraph) $(appdfs)
+	-@ rm -f $(appgraph_obj) $(appdfs_obj) $(appgraph) $(appdfs) $(appbfs)
 
