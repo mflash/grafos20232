@@ -20,7 +20,12 @@ appbfs = appbfs
 appbfs_src = appbfs.cpp graph.cpp breadthfirstsearch.cpp
 appbfs_obj = $(appbfs_src:.cpp=.o)
 
-all: appgraph appdigraph appdfs appbfs
+# Ciclos nao dirigidos
+appucycle = appucycle
+appucycle_src = appundirectedcycle.cpp undirectedcycle.cpp graph.cpp
+appucycle_obj = $(appucycle_src:.cpp=.o)
+
+all: appgraph appdigraph appdfs appbfs appucycle
 
 $(appgraph): $(appgraph_obj)
 	g++ $(CPPFLAGS) $(appgraph_obj) -o $@
@@ -34,6 +39,8 @@ $(appdfs): $(appdfs_obj)
 $(appbfs): $(appbfs_obj)
 	g++ $(CPPFLAGS) $(appbfs_obj) -o $@
 
-clean:
-	-@ rm -f $(appgraph_obj) $(appgraph) $(appdgraph_obj) $(appdgraph) $(appdfs_obj) $(appbfs_obj) $(appdfs) $(appbfs)
+$(appucycle): $(appucycle_obj)
+	g++ $(CPPFLAGS) $(appucycle_obj) -o $@
 
+clean:
+	-@ rm -f $(appgraph_obj) $(appgraph) $(appdgraph_obj) $(appdgraph) $(appdfs_obj) $(appbfs_obj) $(appdfs) $(appbfs) $(appucycle) $(appucycle_obj)
