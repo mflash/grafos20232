@@ -1,6 +1,7 @@
 class Graph:
     def __init__(self, *args):
         self.graph = {}
+        self.vertices = set()
         if len(args) == 1:
             self.__readFromFile(args[0])
 
@@ -12,7 +13,7 @@ class Graph:
         return self.graph[v] if v in self.graph else []
 
     def getVerts(self):
-        return self.graph.keys()
+        return self.vertices
 
     def toDot(self):
         edges = set()
@@ -33,6 +34,8 @@ class Graph:
         list = self.graph[v] if v in self.graph else []
         list.append(w)
         self.graph[v] = list
+        self.vertices.add(v)
+        self.vertices.add(w)
 
     def __readFromFile(self, filename):
         with open(filename) as arq:
