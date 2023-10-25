@@ -11,7 +11,7 @@ class Digraph : public Graph
 
 public:
 	Digraph() : Graph() {}
-	Digraph(std::string filename) : Graph(filename) {}
+	Digraph(std::string filename);
 	void addEdge(std::string v, std::string w);
 	std::string toDot();
 };

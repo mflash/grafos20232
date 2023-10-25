@@ -6,6 +6,21 @@
 
 using namespace std;
 
+Digraph::Digraph(string filename) {
+	ifstream file;
+	file.open(filename);
+	string line, v, w;
+	if(file.is_open()) {
+		while(getline(file, line)) {
+			stringstream ss(line);
+			getline(ss, v, ' ');
+			getline(ss, w, ' ');
+  	  addEdge(v, w);
+    }
+    file.close();
+	}
+}
+
 void Digraph::addEdge(string v, string w)
 {
 	addToList(v, w);
@@ -13,8 +28,6 @@ void Digraph::addEdge(string v, string w)
 
 string Digraph::toDot()
 {
-	// Usa um conjunto de arestas para evitar duplicatas
-	set<string> edges;
 	const string NEWLINE = "\n";
 	string sb;
 	sb = "graph {" + NEWLINE;
@@ -23,14 +36,7 @@ string Digraph::toDot()
 	for (auto const &v : getVerts())
 	{
 		for (auto const &w : getAdj(v))
-		{
-			string edge = v < w ? v + w : w + v;
-			if (edges.find(edge) == edges.end())
-			{
-				sb += v + " -> " + w + NEWLINE;
-				edges.insert(edge);
-			}
-		}
+		    sb += v + " -> " + w + NEWLINE;
 	}
 	sb += "}" + NEWLINE;
 	return sb;
