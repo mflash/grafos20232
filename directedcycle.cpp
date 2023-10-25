@@ -30,12 +30,10 @@ bool DirectedCycle::containsCycle()
 
 bool DirectedCycle::containsCycle(Digraph &g, string v)
 {
-	cout << "Estou em " << v << endl;
 	marked[v] = GRAY;
 	for (auto const &w : g.getAdj(v))
 	{
 		string e = v + "-" + w;
-		cout << "e: " << e << endl;
 		if (marked[w] == GRAY)
 			return true;
 		else if (marked[w] == WHITE)

@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-  Digraph g("tinyG.txt");
+  Digraph g("tinydag.txt");
   DirectedCycle dcycle(g);
 
   cout << g.toDot() << endl;
