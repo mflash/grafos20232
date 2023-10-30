@@ -18,7 +18,7 @@ public class EdgeWeightedGraph {
     this();
     In in = new In(filename);
     String line;
-    while((line = in.readLine()) != null) {
+    while ((line = in.readLine()) != null) {
       String[] edge = line.split(" ");
       addEdge(edge[0], edge[1], Double.parseDouble(edge[2]));
     }
@@ -39,22 +39,25 @@ public class EdgeWeightedGraph {
     return graph.keySet();
   }
 
-  public String toDot() {
-    // Usa um conjunto de arestas para evitar duplicatas
-    Set<String> edges = new HashSet<>();
-    StringBuilder sb = new StringBuilder();
-    sb.append("graph {"+NEWLINE);
-    sb.append("rankdir = LR;"+NEWLINE);
-    sb.append("node [shape = circle];"+NEWLINE);
-    for(String v: getVerts().stream().sorted().toList()) {
-      for (Edge e: getAdj(v)) {
-        String edge = e.toString();
-        if(!edges.contains(edge)) {
-          sb.append(String.format("%s -- %s [label=\"%.3f\"]", e.getV(), e.getW(), e.getWeight()) + NEWLINE);
-          edges.add(edge);
+  public Iterable<Edge> getEdges() {
+    Set<Edge> ed = new HashSet<>();
+    for (String v : getVerts().stream().sorted().toList()) {
+      for (Edge e : getAdj(v)) {
+        if (!ed.contains(e)) {
+          ed.add(e);
         }
       }
     }
+    return ed;
+  }
+
+  public String toDot() {
+    StringBuilder sb = new StringBuilder();
+    sb.append("graph {" + NEWLINE);
+    sb.append("rankdir = LR;" + NEWLINE);
+    sb.append("node [shape = circle];" + NEWLINE);
+    for (Edge e : getEdges())
+      sb.append(String.format("%s -- %s [label=\"%.3f\"]", e.getV(), e.getW(), e.getWeight()) + NEWLINE);
     sb.append("}" + NEWLINE);
     return sb.toString();
   }
