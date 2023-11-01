@@ -8,7 +8,7 @@ class Digraph(Graph):
 
     def toDot(self):
         NEWLINE = '\n'
-        sb = "graph {" + NEWLINE
+        sb = "digraph {" + NEWLINE
         sb += "rankdir = LR;" + NEWLINE
         sb += "node [shape = circle];" + NEWLINE
         for v in sorted(self.getVerts()):

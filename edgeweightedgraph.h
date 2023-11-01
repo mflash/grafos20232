@@ -1,31 +1,31 @@
-#include <vector>
 #include <map>
+#include <set>
 #include <string>
+#include <vector>
+
 #include "edge.h"
 
 #ifndef EWGRAPH_H
 #define EWGRAPH_H
 
-class EdgeWeightedGraph
-{
+class EdgeWeightedGraph {
+ public:
+  EdgeWeightedGraph();
+  EdgeWeightedGraph(std::string filename);
 
-public:
-	EdgeWeightedGraph();
-	EdgeWeightedGraph(std::string filename);
+  std::vector<Edge> getAdj(std::string v);
+  std::set<std::string> getVerts();
 
-	std::vector<Edge> getAdj(std::string v);
-	std::vector<std::string> getVerts();
+  void addEdge(std::string v, std::string w, float weight);
 
-	void addEdge(std::string v, std::string w, float weight);
+  std::string toDot();
 
-	std::string toDot();
+ protected:
+  void addToList(std::string v, Edge e);
+  std::set<std::string> vertices;
 
-
-protected:
-	void addToList(std::string v, Edge e);
-
-private:
-	std::map<std::string, std::vector<Edge>> graph;
+ private:
+  std::map<std::string, std::vector<Edge>> graph;
 };
 
 #endif
