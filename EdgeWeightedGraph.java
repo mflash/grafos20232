@@ -9,9 +9,11 @@ public class EdgeWeightedGraph {
   protected static final String NEWLINE = System.getProperty("line.separator");
 
   protected Map<String, List<Edge>> graph;
+  protected Set<String> vertices;
 
   public EdgeWeightedGraph() {
     graph = new HashMap<>();
+    vertices = new HashSet<>();
   }
 
   public EdgeWeightedGraph(String filename) {
@@ -29,14 +31,18 @@ public class EdgeWeightedGraph {
     Edge e = new Edge(v, w, weight);
     addToList(v, e);
     addToList(w, e);
+    vertices.add(v);
+    vertices.add(w);
   }
 
   public Iterable<Edge> getAdj(String v) {
-    return graph.get(v);
+    List<Edge> res = graph.get(v);
+    if (res == null) res = new LinkedList<>();
+    return res;
   }
 
   public Set<String> getVerts() {
-    return graph.keySet();
+    return vertices;
   }
 
   public Iterable<Edge> getEdges() {

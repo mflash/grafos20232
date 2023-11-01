@@ -7,6 +7,8 @@ public class Digraph extends Graph {
   @Override
   public void addEdge(String v, String w) {
     addToList(v, w);
+    vertices.add(v);
+    vertices.add(w);
   }
 
   @Override

@@ -9,9 +9,11 @@ public class Graph {
   protected static final String NEWLINE = System.getProperty("line.separator");
 
   protected Map<String, List<String>> graph;
+  protected Set<String> vertices;
 
   public Graph() {
     graph = new HashMap<>();
+    vertices = new HashSet<>();
   }
 
   public Graph(String filename) {
@@ -28,14 +30,18 @@ public class Graph {
   public void addEdge(String v, String w) {
     addToList(v, w);
     addToList(w, v);
+    vertices.add(v);
+    vertices.add(w);
   }
 
   public Iterable<String> getAdj(String v) {
-    return graph.get(v);
+    List<String> res = graph.get(v);
+    if (res == null) res = new LinkedList<>();
+    return res;
   }
 
   public Set<String> getVerts() {
-    return graph.keySet();
+    return vertices;
   }
 
   public String toDot() {
