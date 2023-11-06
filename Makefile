@@ -45,7 +45,12 @@ appufind = appufind
 appufind_src = appufind.cpp unionfind.cpp
 appufind_obj = $(appufind_src:.cpp=.o)
 
-all: appgraph appdigraph appdfs appbfs appucycle appdcycle apptopo appewgraph appufind
+# MinHeap
+appminheap = appminheap
+appminheap_src = appminheap.cpp
+appminheap_obj = $(appminheap_src:.cpp=.o)
+
+all: appgraph appdigraph appdfs appbfs appucycle appdcycle apptopo appewgraph appufind appminheap
 
 $(appgraph): $(appgraph_obj)
 	g++ $(CPPFLAGS) $(appgraph_obj) -o $@
@@ -74,9 +79,11 @@ $(appewgraph): $(appewgraph_obj)
 $(appufind): $(appufind_obj)
 	g++ $(CPPFLAGS) $(appufind_obj) -o $@
 
+$(appminheap): $(appminheap_obj)
+	g++ $(CPPFLAGS) $(appminheap_obj) -o $@
+
 clean:
 	-@ rm -f $(appgraph_obj) $(appgraph) $(appdgraph_obj) $(appdgraph) $(appdfs_obj) \
 	   	$(appbfs_obj) $(appdfs) $(appbfs) $(appucycle) $(appucycle_obj) $(appdcycle) $(appdcycle_obj) \
 	    $(apptopo_obj) $(apptopo) $(appewgraph_obj) $(appewgraph) \
-		$(appufind_obj) $(appufind)
-
+		$(appufind_obj) $(appufind) $(appminheap_obj) $(appminheap) 

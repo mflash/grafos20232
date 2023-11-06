@@ -1,5 +1,9 @@
 public class EdgeWeightedDigraph extends EdgeWeightedGraph {
 
+  public EdgeWeightedDigraph() {
+    super();
+  }
+
   public EdgeWeightedDigraph(String filename) {
     super(filename);
   }
@@ -8,8 +12,16 @@ public class EdgeWeightedDigraph extends EdgeWeightedGraph {
   public void addEdge(String v, String w, double weight) {
     Edge e = new Edge(v, w, weight);
     addToList(v, e);
-    vertices.add(v);
-    vertices.add(w);
+    if(!vertices.contains(v)) {
+      vertices.add(v);
+      totalVertices++;
+    }
+    if(!vertices.contains(w)) {
+      vertices.add(w);
+      totalVertices++;
+    }
+    totalEdges += 2;
+    totalEdges++;
   }
 
   @Override

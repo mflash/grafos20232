@@ -10,10 +10,13 @@ public class EdgeWeightedGraph {
 
   protected Map<String, List<Edge>> graph;
   protected Set<String> vertices;
+  protected int totalVertices;
+  protected int totalEdges;
 
   public EdgeWeightedGraph() {
     graph = new HashMap<>();
     vertices = new HashSet<>();
+    totalVertices = totalEdges = 0;
   }
 
   public EdgeWeightedGraph(String filename) {
@@ -31,8 +34,15 @@ public class EdgeWeightedGraph {
     Edge e = new Edge(v, w, weight);
     addToList(v, e);
     addToList(w, e);
-    vertices.add(v);
-    vertices.add(w);
+    if(!vertices.contains(v)) {
+      vertices.add(v);
+      totalVertices++;
+    }
+    if(!vertices.contains(w)) {
+      vertices.add(w);
+      totalVertices++;
+    }
+    totalEdges += 2;
   }
 
   public Iterable<Edge> getAdj(String v) {
@@ -40,6 +50,10 @@ public class EdgeWeightedGraph {
     if (res == null) res = new LinkedList<>();
     return res;
   }
+
+  public int getTotalVerts() { return totalVertices; }
+  
+  public int getTotalEdges() { return totalEdges; }
 
   public Set<String> getVerts() {
     return vertices;
