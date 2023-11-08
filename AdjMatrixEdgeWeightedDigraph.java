@@ -44,6 +44,7 @@ public class AdjMatrixEdgeWeightedDigraph {
   private int totalEdges;
   private Edge[][] adj;
   private Map<String, Integer> dic;
+  private Map<Integer, String> dic2;
   private EdgeWeightedDigraph g;
 
   /**
@@ -59,14 +60,29 @@ public class AdjMatrixEdgeWeightedDigraph {
     if (totalVertices < 0)
       throw new IllegalArgumentException("number of vertices must be nonnegative");
     this.dic = new HashMap<>();
+    this.dic2 = new HashMap<>();
     int cont = 0;
     for (String v : g.getVerts()) {
-      dic.put(v, cont++);
+      dic.put(v, cont);
+      dic2.put(cont, v);
+      cont++;
     }
     this.totalEdges = 0;
     this.adj = new Edge[totalVertices][totalVertices];
     for (Edge e : g.getEdges())
       addEdge(e);
+  }
+
+  public EdgeWeightedDigraph getDigraph() {
+    return g;
+  }
+
+  public int mapToArray(String v) {
+    return dic.get(v);
+  }
+
+  public String mapToString(int v) {
+    return dic2.get(v);
   }
 
   /**

@@ -4,6 +4,7 @@ import java.util.ArrayList;
  * Implementação do algoritmo de Floyd-Warshall usando matriz de adjacência
  */
 public class FloydWarshall {
+    private static final String NEWLINE = System.getProperty("line.separator");
     private boolean temCicloNegativo; // tem ciclo negativo?
     private double[][] dist; // dist[v][w] = distancia do caminho mais curto de v->w
     private int[][] next; // next[v][w] = ultima aresta no caminho mais curto de v->w
@@ -26,9 +27,41 @@ public class FloydWarshall {
         // Comeco do algoritmo...
         startTime = System.currentTimeMillis();
 
+        for (int i = 0; i < V; i++) {
+            for (int j = 0; j < V; j++) {
+                dist[i][j] = Double.POSITIVE_INFINITY;
+                next[i][j] = -1;
+            }
+        }
+
+        for (Edge e : g.getDigraph().getEdges()) {
+            int v = g.mapToArray(e.getV());
+            int w = g.mapToArray(e.getW());
+            dist[v][w] = e.getWeight();
+            next[v][w] = v;
+        }
+
+        for (String u : g.getDigraph().getVerts()) {
+            int v = g.mapToArray(u);
+            dist[v][v] = 0;
+            next[v][v] = v;
+        }
+
         // Loop de Floyd-Warshall
         for (int k = 0; k < V; k++) {
-            // ....
+            for (int i = 0; i < V; i++) {
+                for (int j = 0; j < V; j++) {
+                    if (dist[i][j] > dist[i][k] + dist[k][j]) {
+                        // System.out.println("TROCOU!");
+                        dist[i][j] = dist[i][k] + dist[k][j];
+                        next[i][j] = next[k][j];
+                    }
+                    if (dist[i][i] < 0) {
+                        temCicloNegativo = true;
+                        return;
+                    }
+                }
+            }
         }
 
         // Fim do algoritmo
@@ -85,17 +118,36 @@ public class FloydWarshall {
      *         como um ArrayList de inteiros, e {@code null} se não houver caminho
      * @throws UnsupportedOperationException se existir um ciclo negativo
      */
-    public ArrayList<Integer> caminho(int s, int t) {
+    public ArrayList<Integer> caminho(int u, int v) {
         if (temCicloNegativo())
             throw new UnsupportedOperationException("Existe um ciclo negativo!");
-        if (!temCaminho(s, t))
+        if (!temCaminho(u, v))
             return null;
 
         ArrayList<Integer> path = new ArrayList<Integer>();
 
         // Adiciona vertices no caminho...
-
+        path.add(v);
+        while (u != v) {
+            v = next[u][v];
+            path.add(0, v);
+        }
         return path;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < dist.length; i++) {
+            for (int j = 0; j < dist[i].length; j++) {
+                if (next[i][j] != -1)
+                    sb.append(String.format("%5.2f ", dist[i][j]));
+                else
+                    sb.append("----- ");
+            }
+            sb.append(NEWLINE);
+        }
+        return sb.toString();
     }
 
     /**
@@ -115,6 +167,9 @@ public class FloydWarshall {
         // Executa Floyd-Warshall
         FloydWarshall spt = new FloydWarshall(ag);
 
+        System.out.println();
+        System.out.println(spt);
+
         // Mostra todas as distâncias dos caminhos mais curtos
         // ...
 
@@ -123,9 +178,20 @@ public class FloydWarshall {
             System.out.println("Existe um ciclo negativo!");
         } else {
             // Exibe todos os caminhos
-            // ...
+            for (int u = 0; u < g.getTotalVerts(); u++) {
+                for (int v = 0; v < g.getTotalVerts(); v++) {
+                    if (u != v && spt.temCaminho(u, v)) {
+                        System.out.print(u + "->" + v + ": ");
+                        for (int x : spt.caminho(u, v)) {
+                            String vert = ag.mapToString(x);
+                            System.out.print(vert + " ");
+                        }
+                        System.out.println();
+                    }
+                }
+            }
         }
-
+        System.out.println();
         System.out.println("Tempo de Floyd-Warshall: " + spt.tempoTotal());
     }
 
