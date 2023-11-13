@@ -24,7 +24,7 @@ public class EdgeWeightedGraph {
     In in = new In(filename);
     String line;
     while ((line = in.readLine()) != null) {
-      String[] edge = line.split(" ");
+      String[] edge = line.trim().split("[ ]+");
       addEdge(edge[0], edge[1], Double.parseDouble(edge[2]));
     }
     in.close();
@@ -34,11 +34,11 @@ public class EdgeWeightedGraph {
     Edge e = new Edge(v, w, weight);
     addToList(v, e);
     addToList(w, e);
-    if(!vertices.contains(v)) {
+    if (!vertices.contains(v)) {
       vertices.add(v);
       totalVertices++;
     }
-    if(!vertices.contains(w)) {
+    if (!vertices.contains(w)) {
       vertices.add(w);
       totalVertices++;
     }
@@ -47,13 +47,18 @@ public class EdgeWeightedGraph {
 
   public Iterable<Edge> getAdj(String v) {
     List<Edge> res = graph.get(v);
-    if (res == null) res = new LinkedList<>();
+    if (res == null)
+      res = new LinkedList<>();
     return res;
   }
 
-  public int getTotalVerts() { return totalVertices; }
-  
-  public int getTotalEdges() { return totalEdges; }
+  public int getTotalVerts() {
+    return totalVertices;
+  }
+
+  public int getTotalEdges() {
+    return totalEdges;
+  }
 
   public Set<String> getVerts() {
     return vertices;
